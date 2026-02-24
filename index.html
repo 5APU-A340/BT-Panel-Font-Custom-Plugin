@@ -1,0 +1,829 @@
+<style>
+    .cf-container {
+        padding: 15px;
+    }
+    
+    .cf-section {
+        background: #fff;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .cf-section-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .cf-upload-area {
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 30px 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: #fafafa;
+    }
+    
+    .cf-upload-area:hover {
+        border-color: #20a53a;
+        background: #f0faf2;
+    }
+    
+    .cf-upload-area.dragover {
+        border-color: #20a53a;
+        background: #e8f5e9;
+    }
+    
+    .cf-upload-icon {
+        font-size: 36px;
+        color: #ccc;
+        margin-bottom: 8px;
+    }
+    
+    .cf-upload-text {
+        color: #666;
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+    
+    .cf-upload-hint {
+        font-size: 12px;
+        color: #999;
+    }
+    
+    .cf-font-list {
+        margin-top: 10px;
+    }
+    
+    .cf-font-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        transition: all 0.3s;
+    }
+    
+    .cf-font-item:hover {
+        border-color: #20a53a;
+        box-shadow: 0 2px 8px rgba(32, 165, 58, 0.1);
+    }
+    
+    .cf-font-item.active-regular {
+        border-color: #20a53a;
+        background: #f0faf2;
+    }
+    
+    .cf-font-item.active-bold {
+        border-color: #1890ff;
+        background: #e6f7ff;
+    }
+    
+    .cf-font-info {
+        flex: 1;
+    }
+    
+    .cf-font-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 3px;
+    }
+    
+    .cf-font-meta {
+        font-size: 11px;
+        color: #999;
+    }
+    
+    .cf-font-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    
+    .cf-btn {
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+    }
+    
+    .cf-btn-primary {
+        background: #20a53a;
+        color: #fff;
+    }
+    
+    .cf-btn-primary:hover {
+        background: #1a8a30;
+    }
+    
+    .cf-btn-info {
+        background: #1890ff;
+        color: #fff;
+    }
+    
+    .cf-btn-info:hover {
+        background: #096dd9;
+    }
+    
+    .cf-btn-default {
+        background: #f5f5f5;
+        color: #666;
+        border: 1px solid #ddd;
+    }
+    
+    .cf-btn-default:hover {
+        background: #e8e8e8;
+    }
+    
+    .cf-btn-danger {
+        background: #ff5722;
+        color: #fff;
+    }
+    
+    .cf-btn-danger:hover {
+        background: #e64a19;
+    }
+    
+    .cf-empty {
+        text-align: center;
+        padding: 30px;
+        color: #999;
+    }
+    
+    .cf-empty-icon {
+        font-size: 36px;
+        color: #ddd;
+        margin-bottom: 8px;
+    }
+    
+    .cf-status-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 10px;
+        margin-left: 6px;
+    }
+    
+    .cf-status-badge.regular {
+        background: #e8f5e9;
+        color: #20a53a;
+    }
+    
+    .cf-status-badge.bold {
+        background: #e6f7ff;
+        color: #1890ff;
+    }
+    
+    .cf-preview-box {
+        margin-top: 12px;
+        padding: 15px;
+        background: #fafafa;
+        border-radius: 6px;
+        text-align: center;
+    }
+    
+    .cf-preview-text {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    
+    .cf-preview-subtext {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .cf-progress {
+        display: none;
+        margin-top: 10px;
+    }
+    
+    .cf-progress-bar {
+        height: 5px;
+        background: #eee;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    
+    .cf-progress-inner {
+        height: 100%;
+        background: #20a53a;
+        width: 0%;
+        transition: width 0.3s;
+    }
+    
+    .cf-progress-text {
+        font-size: 11px;
+        color: #666;
+        margin-top: 4px;
+    }
+    
+    .cf-apply-section {
+        background: #f6f8f8;
+        border-radius: 6px;
+        padding: 12px;
+        margin-top: 15px;
+    }
+    
+    .cf-apply-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .cf-apply-row:last-child {
+        margin-bottom: 0;
+    }
+    
+    .cf-apply-label {
+        width: 80px;
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .cf-apply-select {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    
+    .cf-apply-btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+    }
+</style>
+<div class="bt-form">
+    <div class="bt-w-main">
+        <div class="bt-w-menu">
+            <p class="bgw" onclick="customfont.show_overview()">概览</p>
+            <p onclick="customfont.show_fonts()">字体管理</p>
+            <p onclick="customfont.show_help()">使用帮助</p>
+            <p onclick="customfont.show_about()">关于</p>
+        </div>
+        <div class="bt-w-con pd15">
+            <div class="plugin_body cf-container"></div>
+        </div>
+    </div>
+</div>
+
+<input type="file" id="cf-file-input" accept=".ttf" style="display:none">
+
+<script type="text/javascript">
+var customfont = {
+    current_fonts: [],
+    current_regular_font: '',
+    current_bold_font: '',
+    loaded_fonts: {},
+    
+    init: function() {
+        $('.layui-layer-page').css({ 'width': '900px' });
+        $(".bt-w-menu p").click(function () {
+            $(this).addClass('bgw').siblings().removeClass('bgw');
+        });
+        $('#cf-file-input').on('change', function(e) {
+            customfont.handle_file_select(e);
+        });
+        this.show_overview();
+    },
+    
+    load_font_for_preview: function(font_id, font_url) {
+        var self = this;
+        if (this.loaded_fonts[font_id]) {
+            return Promise.resolve(this.loaded_fonts[font_id]);
+        }
+        return new Promise(function(resolve, reject) {
+            var font_name = 'CustomFont-' + font_id;
+            var font_face = new FontFace(font_name, 'url(' + font_url + ')');
+            font_face.load().then(function(loaded_face) {
+                document.fonts.add(loaded_face);
+                self.loaded_fonts[font_id] = font_name;
+                resolve(font_name);
+            }).catch(function(error) {
+                reject(error);
+            });
+        });
+    },
+    
+    show_overview: function() {
+        var self = this;
+        this.request('get_fonts', {}, function(res) {
+            if (res.status) {
+                self.current_fonts = res.data.fonts || [];
+                self.current_regular_font = res.data.current_regular_font || '';
+                self.current_bold_font = res.data.current_bold_font || '';
+            }
+            
+            var regular_name = '默认字体';
+            var bold_name = '默认字体';
+            
+            if (self.current_regular_font) {
+                for (var i = 0; i < self.current_fonts.length; i++) {
+                    if (self.current_fonts[i].id === self.current_regular_font) {
+                        regular_name = self.current_fonts[i].name;
+                        break;
+                    }
+                }
+            }
+            
+            if (self.current_bold_font) {
+                for (var i = 0; i < self.current_fonts.length; i++) {
+                    if (self.current_fonts[i].id === self.current_bold_font) {
+                        bold_name = self.current_fonts[i].name;
+                        break;
+                    }
+                }
+            }
+            
+            var html = '<div class="cf-section">' +
+                '<div class="cf-section-title">当前状态 <span style="font-size:11px;color:#999;font-weight:normal;">v1.2.3</span></div>' +
+                '<div style="padding: 8px 0;">' +
+                    '<p style="margin-bottom: 8px;"><strong>常规字体：</strong><span style="color: #20a53a;">' + regular_name + '</span></p>' +
+                    '<p style="margin-bottom: 8px;"><strong>粗体字体：</strong><span style="color: #1890ff;">' + bold_name + '</span></p>' +
+                    '<p style="margin-bottom: 8px;"><strong>已上传字体：</strong>' + self.current_fonts.length + ' 个</p>' +
+                '</div>' +
+                            '<div class="cf-preview-box" id="cf-preview-box">' +
+                                '<div class="cf-preview-text" id="cf-preview-text">面板自定义字体预览</div>' +
+                                '<div class="cf-preview-subtext" id="cf-preview-subtext">The quick brown fox jumps over the lazy dog</div>' +
+                                '<div class="cf-preview-subtext" id="cf-preview-subtext2" style="margin-top: 5px;">这是一段中文预览文字，测试字体效果</div>' +
+                                '<div style="margin-top: 15px; text-align: center;">' +
+                                    '<button class="cf-btn cf-btn-default" onclick="customfont.toggle_preview_font()">切换预览字体</button>' +
+                                '</div>' +
+                            '</div>' +            '</div>' +
+            '<div class="cf-section">' +
+                '<div class="cf-section-title">快速操作</div>' +
+                '<div class="cf-apply-btns">' +
+                    '<button class="cf-btn cf-btn-primary" onclick="customfont.go_to_fonts()">管理字体</button>' +
+                    '<button class="cf-btn cf-btn-default" onclick="customfont.reset_font()">恢复默认字体</button>' +
+                '</div>' +
+            '</div>';
+            
+            $('.plugin_body').html(html);
+        });
+    },
+    
+    show_fonts: function() {
+        var self = this;
+        this.request('get_fonts', {}, function(res) {
+            if (res.status) {
+                self.current_fonts = res.data.fonts || [];
+                self.current_regular_font = res.data.current_regular_font || '';
+                self.current_bold_font = res.data.current_bold_font || '';
+            }
+            
+            var font_list_html = '';
+            if (self.current_fonts.length > 0) {
+                for (var i = 0; i < self.current_fonts.length; i++) {
+                    var font = self.current_fonts[i];
+                    var is_regular = font.id === self.current_regular_font;
+                    var is_bold = font.id === self.current_bold_font;
+                    var size_kb = (font.size / 1024).toFixed(1);
+                    
+                    var item_class = '';
+                    var badge = '';
+                    if (is_regular) {
+                        item_class = ' active-regular';
+                        badge = '<span class="cf-status-badge regular">常规</span>';
+                    }
+                    if (is_bold) {
+                        item_class = ' active-bold';
+                        badge += '<span class="cf-status-badge bold">粗体</span>';
+                    }
+                    
+                    font_list_html += '<div class="cf-font-item' + item_class + '" data-font-id="' + font.id + '">' +
+                        '<div class="cf-font-info">' +
+                            '<div class="cf-font-name">' + font.name + badge + '</div>' +
+                            '<div class="cf-font-meta">' + font.ext.toUpperCase() + ' | ' + size_kb + ' KB | ' + font.addtime + '</div>' +
+                        '</div>' +
+                        '<div class="cf-font-actions">' +
+                            '<button class="cf-btn cf-btn-primary" onclick="customfont.set_as_regular(\'' + font.id + '\')">设为常规</button>' +
+                            '<button class="cf-btn cf-btn-info" onclick="customfont.set_as_bold(\'' + font.id + '\')">设为粗体</button>' +
+                            '<button class="cf-btn cf-btn-default" onclick="customfont.preview_font_detail(\'' + font.id + '\')">预览</button>' +
+                            '<button class="cf-btn cf-btn-danger" onclick="customfont.delete_font(\'' + font.id + '\', \'' + font.name.replace(/'/g, "\\'") + '\')">删除</button>' +
+                        '</div>' +
+                    '</div>';
+                }
+            } else {
+                font_list_html = '<div class="cf-empty">' +
+                    '<div class="cf-empty-icon">📁</div>' +
+                    '<p>暂无已上传的字体</p>' +
+                '</div>';
+            }
+            
+            // 构建选择框选项
+            var select_options = '<option value="">-- 不更改 --</option>';
+            for (var i = 0; i < self.current_fonts.length; i++) {
+                var font = self.current_fonts[i];
+                select_options += '<option value="' + font.id + '">' + font.name + '</option>';
+            }
+            
+            var html = '<div class="cf-section">' +
+                '<div class="cf-section-title">上传字体</div>' +
+                '<div class="cf-upload-area" id="cf-upload-area" onclick="document.getElementById(\'cf-file-input\').click()">' +
+                    '<div class="cf-upload-icon">📤</div>' +
+                    '<div class="cf-upload-text">点击或拖拽字体文件到此处上传</div>' +
+                    '<div class="cf-upload-hint">仅支持TTF格式 | 最大10MB</div>' +
+                '</div>' +
+                '<div class="cf-progress" id="cf-progress">' +
+                    '<div class="cf-progress-bar"><div class="cf-progress-inner" id="cf-progress-inner"></div></div>' +
+                    '<div class="cf-progress-text" id="cf-progress-text">上传中...</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="cf-section">' +
+                '<div class="cf-section-title">已上传字体 (' + self.current_fonts.length + ')</div>' +
+                '<div class="cf-font-list">' + font_list_html + '</div>' +
+                '<div class="cf-apply-section">' +
+                    '<div class="cf-apply-row">' +
+                        '<span class="cf-apply-label">常规字体：</span>' +
+                        '<select class="cf-apply-select" id="cf-regular-select">' + select_options + '</select>' +
+                    '</div>' +
+                    '<div class="cf-apply-row">' +
+                        '<span class="cf-apply-label">粗体字体：</span>' +
+                        '<select class="cf-apply-select" id="cf-bold-select">' + select_options + '</select>' +
+                    '</div>' +
+                    '<div class="cf-apply-btns">' +
+                        '<button class="cf-btn cf-btn-primary" onclick="customfont.apply_fonts()">应用设置</button>' +
+                        '<button class="cf-btn cf-btn-default" onclick="customfont.reset_font()">恢复默认</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+            
+            $('.plugin_body').html(html);
+            
+            // 设置当前选中值
+            if (self.current_regular_font) {
+                $('#cf-regular-select').val(self.current_regular_font);
+            }
+            if (self.current_bold_font) {
+                $('#cf-bold-select').val(self.current_bold_font);
+            }
+            
+            self.bind_drag_events();
+        });
+    },
+    
+    set_as_regular: function(font_id) {
+        $('#cf-regular-select').val(font_id);
+        layer.msg('已选择为常规字体，请点击"应用设置"生效', {icon: 1, time: 2000});
+    },
+    
+    set_as_bold: function(font_id) {
+        $('#cf-bold-select').val(font_id);
+        layer.msg('已选择为粗体字体，请点击"应用设置"生效', {icon: 1, time: 2000});
+    },
+    
+    apply_fonts: function() {
+        var regular_id = $('#cf-regular-select').val() || '';
+        var bold_id = $('#cf-bold-select').val() || '';
+        
+        if (!regular_id && !bold_id) {
+            layer.msg('请至少选择一种字体', {icon: 2});
+            return;
+        }
+        
+        var self = this;
+        layer.confirm('确定要应用字体设置吗？应用后刷新页面即可生效。', {title: '提示'}, function(index) {
+            layer.close(index);
+            var load_index = layer.msg('正在应用字体...', {icon: 16, time: 0});
+            self.request('apply_font', {regular_font_id: regular_id, bold_font_id: bold_id}, function(res) {
+                layer.close(load_index);
+                layer.msg(res.msg, {icon: res.status ? 1 : 2});
+                if (res.status) {
+                    self.current_regular_font = regular_id;
+                    self.current_bold_font = bold_id;
+                    self.show_fonts();
+                }
+            });
+        });
+    },
+    
+    preview_font_detail: function(font_id) {
+        var self = this;
+        var font = null;
+        for (var i = 0; i < this.current_fonts.length; i++) {
+            if (this.current_fonts[i].id === font_id) {
+                font = this.current_fonts[i];
+                break;
+            }
+        }
+        
+        if (!font) {
+            layer.msg('字体不存在', {icon: 2});
+            return;
+        }
+        
+        var font_url = '/customfont/static/fonts/' + font.filename;
+        var load_index = layer.msg('正在加载字体...', {icon: 16, time: 0});
+        
+        this.load_font_for_preview(font_id, font_url).then(function(font_name) {
+            layer.close(load_index);
+            var preview_html = '<div style="padding: 20px; text-align: center;">' +
+                '<h3 style="margin-bottom: 15px; font-family: ' + font_name + ';">' + font.name + '</h3>' +
+                '<div style="font-size: 24px; margin: 15px 0; font-family: ' + font_name + ';">面板自定义字体预览</div>' +
+                '<div style="font-size: 16px; margin: 10px 0; font-family: ' + font_name + ';">The quick brown fox jumps over the lazy dog</div>' +
+                '<div style="font-size: 14px; margin: 10px 0; font-family: ' + font_name + ';">这是一段中文预览文字，测试字体效果</div>' +
+                '<div style="font-size: 13px; margin: 10px 0; font-family: ' + font_name + ';">' +
+                    'ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>' +
+                    'abcdefghijklmnopqrstuvwxyz<br>' +
+                    '0123456789' +
+                '</div>' +
+            '</div>';
+            
+            layer.open({
+                type: 1,
+                title: '字体预览 - ' + font.name,
+                area: ['450px', '380px'],
+                content: preview_html
+            });
+        }).catch(function(error) {
+            layer.close(load_index);
+            layer.msg('字体加载失败', {icon: 2});
+        });
+    },
+    
+    show_help: function() {
+        var html = '<div class="cf-section">' +
+            '<div class="cf-section-title">使用帮助</div>' +
+            '<div style="line-height: 1.8; font-size: 12px;">' +
+                '<h4 style="margin: 12px 0 8px; color: #333;">1. 关于字体类型</h4>' +
+                '<p style="color: #666; padding-left: 12px;">• <b>常规字体</b>：用于面板大部分文字显示</p>' +
+                '<p style="color: #666; padding-left: 12px;">• <b>粗体字体</b>：用于标题、强调文字等</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 可以设置相同字体作为常规和粗体使用</p>' +
+                
+                '<h4 style="margin: 12px 0 8px; color: #333;">2. 如何上传字体</h4>' +
+                '<p style="color: #666; padding-left: 12px;">• 点击上传区域或拖拽TTF文件</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 仅支持TTF格式，最大10MB</p>' +
+                
+                '<h4 style="margin: 12px 0 8px; color: #333;">3. 如何应用字体</h4>' +
+                '<p style="color: #666; padding-left: 12px;">• 方法一：点击字体右侧"设为常规"或"设为粗体"按钮</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 方法二：在下拉框中选择字体后点击"应用设置"</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 刷新页面即可看到效果</p>' +
+                
+                '<h4 style="margin: 12px 0 8px; color: #333;">4. 注意事项</h4>' +
+                '<p style="color: #666; padding-left: 12px;">• 建议使用支持中文的字体文件</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 删除正在使用的字体会自动恢复默认</p>' +
+                '<p style="color: #666; padding-left: 12px;">• 面板更新后可能需要重新应用字体</p>' +
+            '</div>' +
+        '</div>';
+        
+        $('.plugin_body').html(html);
+    },
+    
+    //显示关于页面
+    show_about: function() {
+        var html = '<div class="cf-section">' +
+            '<div class="cf-section-title">关于本插件</div>' +
+            '<div style="line-height: 1.8;">' +
+                '<h4 style="margin: 15px 0 10px; color: #333;">项目信息</h4>' +
+                '<p style="color: #666; padding-left: 15px;"><strong>项目名称：</strong>宝塔面板自定义字体插件</p>' +
+                '<p style="color: #666; padding-left: 15px;"><strong>当前版本：</strong>1.2.3</p>' +
+                '<p style="color: #666; padding-left: 15px;"><strong>许可证：</strong>MIT License</p>' +
+                
+                '<h4 style="margin: 15px 0 10px; color: #333;">开源信息</h4>' +
+                '<p style="color: #666; padding-left: 15px;">项目开源地址：<a href="https://github.com/5APU-A340/BT-Panel-Font-Custom-Plugin" target="_blank" style="color: #20a53a;">https://github.com/5APU-A340/BT-Panel-Font-Custom-Plugin</a></p>' +
+                
+                '<h4 style="margin: 15px 0 10px; color: #333;">开发者信息</h4>' +
+                '<p style="color: #666; padding-left: 15px;"><strong>开发者：</strong>5APU-A340@GitHub</p>' +
+                '<p style="color: #666; padding-left: 15px;"><strong>Bilibili：</strong><a href="https://space.bilibili.com/3546612276136682" target="_blank" style="color: #20a53a;">https://space.bilibili.com/3546612276136682</a></p>' +
+                
+                '<h4 style="margin: 15px 0 10px; color: #333;">功能简介</h4>' +
+                '<p style="color: #666; padding-left: 15px;">• 支持上传自定义TTF字体文件</p>' +
+                '<p style="color: #666; padding-left: 15px;">• 可分别设置常规字体和粗体字体</p>' +
+                '<p style="color: #666; padding-left: 15px;">• 全局替换面板所有文字显示</p>' +
+                '<p style="color: #666; padding-left: 15px;">• 支持一键恢复默认字体</p>' +
+                
+                '<h4 style="margin: 15px 0 10px; color: #333;">感谢使用</h4>' +
+                '<p style="color: #666; padding-left: 15px;">本插件遵循MIT开源协议，欢迎提交Issue或Pull Request帮助改进。</p>' +
+            '</div>' +
+        '</div>';
+        
+        $('.plugin_body').html(html);
+    },
+    
+    // 切换预览字体类型（常规/粗体）
+    toggle_preview_font: function() {
+        var self = this;
+        if (!self.current_regular_font && !self.current_bold_font) {
+            layer.msg('请先应用字体', {icon: 2});
+            return;
+        }
+        
+        // 查找当前应该预览的字体
+        var preview_font_id, preview_font_name, button_text;
+        if (self.current_preview_type === 'bold' || !self.current_preview_type) {
+            // 当前显示粗体或初始状态，切换到常规字体预览
+            preview_font_id = self.current_regular_font;
+            preview_font_name = '常规字体';
+            self.current_preview_type = 'regular';
+            button_text = '切换到粗体预览';
+        } else {
+            // 当前显示常规字体，切换到粗体预览
+            preview_font_id = self.current_bold_font;
+            preview_font_name = '粗体字体';
+            self.current_preview_type = 'bold';
+            button_text = '切换到常规预览';
+        }
+        
+        if (!preview_font_id) {
+            layer.msg('请先设置' + preview_font_name, {icon: 2});
+            return;
+        }
+        
+        // 查找字体信息
+        var font_info = null;
+        for (var i = 0; i < self.current_fonts.length; i++) {
+            if (self.current_fonts[i].id === preview_font_id) {
+                font_info = self.current_fonts[i];
+                break;
+            }
+        }
+        
+        if (!font_info) {
+            layer.msg('字体文件不存在', {icon: 2});
+            return;
+        }
+        
+        // 设置按钮文本
+        $('#cf-preview-box button').text(button_text);
+        
+        // 加载并应用字体预览
+        var font_url = '/customfont/static/fonts/' + font_info.filename;
+        self.load_font_for_preview(font_info.id, font_url).then(function(font_name) {
+            $('#cf-preview-text, #cf-preview-subtext, #cf-preview-subtext2').css('font-family', font_name);
+            // 对于粗体预览，增加字体粗细
+            if (self.current_preview_type === 'bold') {
+                $('#cf-preview-text, #cf-preview-subtext, #cf-preview-subtext2').css('font-weight', 'bold');
+            } else {
+                $('#cf-preview-text, #cf-preview-subtext, #cf-preview-subtext2').css('font-weight', 'normal');
+            }
+            layer.msg('正在预览' + preview_font_name, {icon: 1});
+        }).catch(function(e) {
+            layer.msg('字体预览加载失败', {icon: 2});
+        });
+    },
+    
+    bind_drag_events: function() {
+        var upload_area = document.getElementById('cf-upload-area');
+        if (!upload_area) return;
+        
+        upload_area.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
+        });
+        
+        upload_area.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+        });
+        
+        upload_area.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+            var files = e.dataTransfer.files;
+            if (files.length > 0) {
+                customfont.upload_file(files[0]);
+            }
+        });
+    },
+    
+    handle_file_select: function(e) {
+        var files = e.target.files;
+        if (files.length > 0) {
+            this.upload_file(files[0]);
+        }
+        e.target.value = '';
+    },
+    
+    upload_file: function(file) {
+        var self = this;
+        var ext = '.' + file.name.split('.').pop().toLowerCase();
+        
+        if (ext !== '.ttf') {
+            layer.msg('仅支持TTF格式字体文件', {icon: 2});
+            return;
+        }
+        
+        if (file.size > 10 * 1024 * 1024) {
+            layer.msg('字体文件过大，最大支持10MB', {icon: 2});
+            return;
+        }
+        
+        $('#cf-progress').show();
+        $('#cf-progress-inner').css('width', '0%');
+        $('#cf-progress-text').text('上传中...');
+        
+        var formData = new FormData();
+        formData.append('file', file);
+        
+        var xhr = new XMLHttpRequest();
+        
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                var percent = (e.loaded / e.total * 100).toFixed(0);
+                $('#cf-progress-inner').css('width', percent + '%');
+                $('#cf-progress-text').text('上传中... ' + percent + '%');
+            }
+        };
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.status) {
+                        $('#cf-progress-text').text('上传成功！');
+                        layer.msg(res.msg, {icon: 1});
+                        setTimeout(function() {
+                            $('#cf-progress').hide();
+                            self.show_fonts();
+                        }, 800);
+                    } else {
+                        $('#cf-progress').hide();
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                } catch (e) {
+                    $('#cf-progress').hide();
+                    layer.msg('上传失败', {icon: 2});
+                }
+            } else {
+                $('#cf-progress').hide();
+                layer.msg('上传失败', {icon: 2});
+            }
+        };
+        
+        xhr.onerror = function() {
+            $('#cf-progress').hide();
+            layer.msg('上传失败', {icon: 2});
+        };
+        
+        xhr.open('POST', '/plugin?action=a&s=upload_font&name=customfont');
+        xhr.send(formData);
+    },
+    
+    delete_font: function(font_id, font_name) {
+        var self = this;
+        layer.confirm('确定要删除字体"' + font_name + '"吗？', {title: '警告'}, function(index) {
+            layer.close(index);
+            self.request('delete_font', {font_id: font_id}, function(res) {
+                layer.msg(res.msg, {icon: res.status ? 1 : 2});
+                if (res.status) {
+                    self.show_fonts();
+                }
+            });
+        });
+    },
+    
+    reset_font: function() {
+        var self = this;
+        layer.confirm('确定要恢复默认字体吗？', {title: '提示'}, function(index) {
+            layer.close(index);
+            var load_index = layer.msg('正在恢复...', {icon: 16, time: 0});
+            self.request('apply_font', {}, function(res) {
+                layer.close(load_index);
+                layer.msg(res.msg, {icon: res.status ? 1 : 2});
+                if (res.status) {
+                    self.current_regular_font = '';
+                    self.current_bold_font = '';
+                    self.show_overview();
+                }
+            });
+        });
+    },
+    
+    go_to_fonts: function() {
+        $(".bt-w-menu p").removeClass('bgw').eq(1).addClass('bgw');
+        this.show_fonts();
+    },
+    
+    request: function(func, args, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/plugin?action=a&s=' + func + '&name=customfont',
+            data: args,
+            timeout: 60000,
+            success: function(rdata) {
+                if (callback) return callback(rdata);
+            },
+            error: function() {
+                layer.msg('请求失败', {icon: 2});
+            }
+        });
+    }
+};
+
+customfont.init();
+</script>

@@ -1,0 +1,9 @@
+{
+  "title": "面板自定义字体",
+  "name": "customfont",
+  "ps": "支持上传自定义字体文件并更改面板前端显示字体，v1.2.3新增预览功能切换常规/粗体字体",
+  "versions": "1.2.3",
+  "checks": "/www/server/panel/plugin/customfont",
+  "author": "Hutao0514",
+  "home": "https://www.bt.cn"
+}
