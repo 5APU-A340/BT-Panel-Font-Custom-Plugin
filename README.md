@@ -39,7 +39,6 @@ A: 目前仅支持 TTF 格式，确保最佳兼容性。
 
 ## 开发信息
 
-- **作者**: Hutao0514
 - **许可证**: MIT License
 - **开源地址**: https://github.com/5APU-A340/BT-Panel-Font-Custom-Plugin
 
